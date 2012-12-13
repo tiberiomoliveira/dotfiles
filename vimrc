@@ -5,6 +5,8 @@ set nobackup
 set number
 set autoindent
 set smartindent
+set cursorline
+set ls=2
 syntax on
 
 set shiftwidth=2
