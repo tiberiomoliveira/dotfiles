@@ -1,4 +1,3 @@
-" Colorscheme for vim
 colorscheme tibas
 " Number of colors supported
 set t_Co=256
@@ -21,7 +20,7 @@ set expandtab
 set cursorline
 
 " Set a fancy status line for VI
-set statusline=%<%F%h%m%r%w\ %9(%{&ff}%)\ \|\ %Y%=%-17.(A=\%03.3b\ -\ 0x\%02.2B%)\ %-14.(%04l,%04v%)\ %P
+set statusline=%<%F%h%m%r%w\ %9(%{&ff}%)\ \|\ %Y%=%-18.(A=\%03.3b\ -\ 0x\%02.2B%)\ %-14.(%04l,%04v%)\ %P
 " Let status line always visible 
 set laststatus=2
 " Active syntax
@@ -29,7 +28,7 @@ filetype plugin indent on
 syntax on
 
 filetype plugin on
-" 
+set tags+=~/.vim/tags
 if has("autocmd")
   autocmd Filetype java setlocal omnifunc=javacomplete#Complete
   autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
@@ -44,6 +43,23 @@ set pumheight=15
 let g:SuperTabDefaultCompletionType = "context"
 
 " Disable auto popup, use <Tab> to autocomplete
-let g:clang_complete_auto = 0
+let g:clang_complete_auto=0
 " Show clang errors in the quickfix window
-let g:clang_complete_copen = 1
+let g:clang_complete_copen=1
+
+let g:clang_use_library=1
+let g:clang_library_path = "/usr/lib"
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=0
+" Avoids lame path cache generation and other unknown sources for includes 
+let g:clang_auto_user_options=''
+let g:clang_user_options='-std=c++11 -stdlib=libc++'
+let g:clang_memory_percent=70
+
+set conceallevel=2
+set concealcursor=vin
+let g:clang_snippets=1
+let g:clang_conceal_snippets=1
+" The single one that works with clang_complete
+let g:clang_snippets_engine='clang_complete'
+
