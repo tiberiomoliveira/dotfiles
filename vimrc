@@ -23,16 +23,17 @@ set cursorline
 set statusline=%<%F%h%m%r%w\ %9(%{&ff}%)\ \|\ %Y%=%-18.(A=\%03.3b\ -\ 0x\%02.2B%)\ %-14.(%04l,%04v%)\ %P
 " Let status line always visible 
 set laststatus=2
-" Active syntax
+
+
+" Start pathogen
+filetype off
+execute pathogen#infect()
 filetype plugin indent on
+" Active syntax
 syntax on
 
 filetype plugin on
 set tags+=~/.vim/tags
-if has("autocmd")
-  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-  autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
-endif
 
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
@@ -63,3 +64,13 @@ let g:clang_conceal_snippets=1
 " The single one that works with clang_complete
 let g:clang_snippets_engine='clang_complete'
 
+" NERDTree
+autocmd VimEnter * if !argc() | NERDTree | endif
+autocmd VimEnter * wincmd p
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Mini Buffer some settigns."
+let g:miniBufExplMapWindowNavVim    = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs  = 1
+let g:miniBufExplModSelTarget       = 1
