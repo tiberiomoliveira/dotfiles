@@ -12,7 +12,8 @@ The plugins are:
   - Clang Complete
   - SuperTab
 
-HINT:
+HINT 1:
+------
 
 To play well with SuperTab plugin, the snipMate plugin needs a little adjustment. The thing is that snipMate has a snippet pattern, that turns a dot into brackets []. Which is bad when you type a dot and then hit <Tab> to autocomplete with SuperTab.
   "myclass."
@@ -24,3 +25,10 @@ To fix this, the snipMate/snippets/c.snippets file needs to be changed from:
 to:
   # snippet .
   #     [${1}]${2} 
+
+HINT 2:
+------
+
+To make clang work properly, use ctag command for create the appropriate tags file.
+For example, for cpp language:
+  ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f output_cpp_file cpp_includes_path
