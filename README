@@ -1,5 +1,26 @@
-For VIM, it's good to see:
-https://github.com/msanders/snipmate.vim
-https://github.com/ervandew/supertab
-https://github.com/Rip-Rip/clang_complete
-https://github.com/vim-scripts/javacomplete
+VIM like an IDE
+===============
+
+I try to get together the more useful plugins for vim and find a way to install then easyly.
+
+The plugins are:
+  - MiniBufExpl
+  - SnipMate
+  - Syntastic
+  - NerdTree
+  - Simple Pairs
+  - Clang Complete
+  - SuperTab
+
+HINT:
+
+To play well with SuperTab plugin, the snipMate plugin needs a little adjustment. The thing is that snipMate has a snippet pattern, that turns a dot into brackets []. Which is bad when you type a dot and then hit <Tab> to autocomplete with SuperTab.
+  "myclass."
+turns to:
+  "myclass[]"
+To fix this, the snipMate/snippets/c.snippets file needs to be changed from:
+  snippet .
+      [${1}]${2}
+to:
+  # snippet .
+  #     [${1}]${2} 
