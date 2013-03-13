@@ -13,9 +13,8 @@ pathogen_plugin:
 
 git_bundles:
 	@[ -d $(VIM_HOME)/bundle ] || mkdir -p $(VIM_HOME)/bundle
-	@echo Getting Minibufexpl...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/fholgado/minibufexpl.vim.git)
-	@echo Done.
+#	@echo Getting Minibufexpl...
+#	@(cd $(VIM_HOME)/bundle && git clone https://github.com/fholgado/minibufexpl.vim.git)
 	@echo Getting Snipmate...
 	@(cd $(VIM_HOME)/bundle && git clone https://github.com/msanders/snipmate.vim.git)
 	@echo Done.
@@ -24,6 +23,9 @@ git_bundles:
 	@echo Done.
 	@echo Getting NerdTree...
 	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/nerdtree.git)
+	@echo Done.
+	@echo Getting Vim Nerd Tree Tabs...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/jistr/vim-nerdtree-tabs.git)
 	@echo Done.
 	@echo Getting Simple Pairs...
 	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git)
