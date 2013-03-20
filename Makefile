@@ -13,22 +13,20 @@ pathogen_plugin:
 
 git_bundles:
 	@[ -d $(VIM_HOME)/bundle ] || mkdir -p $(VIM_HOME)/bundle
-#	@echo Getting Minibufexpl...
-#	@(cd $(VIM_HOME)/bundle && git clone https://github.com/fholgado/minibufexpl.vim.git)
 	@echo Getting Snipmate...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/msanders/snipmate.vim.git)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/msanders/snipmate.vim.git || true)
 	@echo Done.
 	@echo Getting Syntastic...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/syntastic.git)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/syntastic.git || true)
 	@echo Done.
 	@echo Getting NerdTree...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/nerdtree.git)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/nerdtree.git || true)
 	@echo Done.
 	@echo Getting Vim Nerd Tree Tabs...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/jistr/vim-nerdtree-tabs.git)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/jistr/vim-nerdtree-tabs.git || true)
 	@echo Done.
 	@echo Getting Simple Pairs...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git || true)
 	@echo Done.
 
 vim_theme:
