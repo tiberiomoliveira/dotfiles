@@ -13,26 +13,22 @@ pathogen_plugin:
 
 git_bundles:
 	@[ -d $(VIM_HOME)/bundle ] || mkdir -p $(VIM_HOME)/bundle
-	@echo Getting Minibufexpl...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/fholgado/minibufexpl.vim.git || true)
-	@echo Done.
+#	@echo Getting Minibufexpl...
+#	@(cd $(VIM_HOME)/bundle && git clone https://github.com/fholgado/minibufexpl.vim.git)
 	@echo Getting Snipmate...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/msanders/snipmate.vim.git || true)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/msanders/snipmate.vim.git)
 	@echo Done.
 	@echo Getting Syntastic...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/syntastic.git || true)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/syntastic.git)
 	@echo Done.
 	@echo Getting NerdTree...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/nerdtree.git || true)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/scrooloose/nerdtree.git)
+	@echo Done.
+	@echo Getting Vim Nerd Tree Tabs...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/jistr/vim-nerdtree-tabs.git)
 	@echo Done.
 	@echo Getting Simple Pairs...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git || true)
-	@echo Done.
-	@echo Getting Clang Complete...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/Rip-Rip/clang_complete.git || true)
-	@echo Done.
-	@echo Getting SuperTab...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/ervandew/supertab.git || true)
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git)
 	@echo Done.
 
 vim_theme:
@@ -59,13 +55,11 @@ clean:
 	@rm -rf $(VIM_HOME)/bundle/syntastic
 	@rm -rf $(VIM_HOME)/bundle/nerdtree
 	@rm -rf $(VIM_HOME)/bundle/simple-pairs
-	@rm -rf $(VIM_HOME)/bundle/clang_complete
-	@rm -rf $(VIM_HOME)/bundle/supertab
 	@rm -f $(VIM_HOME)/colors/tibas.vim
 	@echo Done.
 	@echo Restoring old vimrc...
 	@[ -f $(INSTALL_PATH)/.vimrc_old ] && mv $(INSTALL_PATH)/.vimrc $(INSTALL_PATH)/.vimrc_bkp \
-																			&&  mv $(INSTALL_PATH)/.vimrc_old $(INSTALL_PATH)/.vimrc \
+																			&&  @mv $(INSTALL_PATH)/.vimrc_old $(INSTALL_PATH)/.vimrc \
 																			|| echo Old vimrc doesn\'t exist.
 	@echo Done.
 
