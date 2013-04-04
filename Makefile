@@ -34,6 +34,9 @@ git_bundles:
 	@echo Getting Clang Complete...
 	@(cd $(VIM_HOME)/bundle && git clone https://github.com/Rip-Rip/clang_complete.git || true)
 	@echo Done.
+	@echo Getting Jedi - Python autocomplete...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/davidhalter/jedi-vim.git || true)
+	@echo Done.
 
 
 vim_theme:
