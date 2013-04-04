@@ -4,13 +4,13 @@ VIM like an IDE
 I try to get together the more useful plugins for vim and find a way to install then easyly.
 
 The plugins are:
-  - MiniBufExpl
-  - SnipMate
+  - Snipmate
   - Syntastic
   - NerdTree
+  - NerdTree Tabs
   - Simple Pairs
-  - Clang Complete
   - SuperTab
+  - Clang Complete
 
 HINT 1:
 ------

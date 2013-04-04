@@ -24,21 +24,24 @@ set statusline=%<%F%h%m%r%w\ %9(%{&ff}%)\ \|\ %Y%=%-18.(A=\%03.3b\ -\ 0x\%02.2B%
 " Let status line always visible 
 set laststatus=2
 
-
-" Start pathogen
+" Enable Pathogen
 filetype off
 execute pathogen#infect()
-filetype plugin indent on
-" Active syntax
+
+" Enable syntax
 syntax on
-
 filetype plugin on
-set tags+=~/.vim/tags
+filetype plugin indent on
 
+" C/C++ complete
+" ctags for c++ complete
+set tags+=~/.vim/tags
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
 " Limit popup menu height
 set pumheight=15
+" Close popup menu when it is not visible
+autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
 " Supertab option for context aware completation
 let g:SuperTabDefaultCompletionType = "context"
@@ -47,7 +50,6 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:clang_complete_auto=0
 " Show clang errors in the quickfix window
 let g:clang_complete_copen=1
-
 let g:clang_use_library=1
 let g:clang_library_path = "/usr/lib"
 let g:clang_complete_macros=1
@@ -65,12 +67,14 @@ let g:clang_conceal_snippets=1
 let g:clang_snippets_engine='clang_complete'
 
 " NERDTree
+" Make NerdTree auto startup
+autocmd VimEnter * NERDTree
+" Make NerdTree startup even if it is not file open
 autocmd VimEnter * if !argc() | NERDTree | endif
-autocmd VimEnter * wincmd p
+" Let file be the highlight window
+autocmd VimEnter * wincmd w
+" Close vim when the NerdTree is the last window opended
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" Mini Buffer some settigns."
-let g:miniBufExplMapWindowNavVim    = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs  = 1
-let g:miniBufExplModSelTarget       = 1
+" NERDTreeTabs
+let g:nerdtree_tabs_open_on_console_startup = 1

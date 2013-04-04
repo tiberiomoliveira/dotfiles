@@ -28,6 +28,13 @@ git_bundles:
 	@echo Getting Simple Pairs...
 	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git || true)
 	@echo Done.
+	@echo Getting SuperTab...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/ervandew/supertab.git || true)
+	@echo Done.
+	@echo Getting Clang Complete...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/Rip-Rip/clang_complete.git || true)
+	@echo Done.
+
 
 vim_theme:
 	@[ -d $(VIM_HOME)/colors ] || mkdir -p $(VIM_HOME)/colors
@@ -53,6 +60,8 @@ clean:
 	@rm -rf $(VIM_HOME)/bundle/syntastic
 	@rm -rf $(VIM_HOME)/bundle/nerdtree
 	@rm -rf $(VIM_HOME)/bundle/simple-pairs
+	@rm -rf $(VIM_HOME)/bundle/supertab
+	@rm -rf $(VIM_HOME)/bundle/clang_complete
 	@rm -f $(VIM_HOME)/colors/tibas.vim
 	@echo Done.
 	@echo Restoring old vimrc...
