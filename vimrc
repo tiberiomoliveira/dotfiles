@@ -36,6 +36,7 @@ filetype plugin indent on
 " C/C++ complete
 " ctags for c++ complete
 set tags+=~/.vim/tags
+
 " Complete options (disable preview scratch window)
 set completeopt=menu,menuone,longest
 " Limit popup menu height
@@ -77,4 +78,5 @@ autocmd VimEnter * wincmd w
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " NERDTreeTabs
-let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_focus_on_files=1
