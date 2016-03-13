@@ -1,4 +1,4 @@
-INSTALL_PATH = .
+INSTALL_PATH = ~/
 VIM_HOME = $(INSTALL_PATH)/.vim
 
 all: pathogen_plugin git_bundles vim_theme vimrc_file
@@ -28,14 +28,11 @@ git_bundles:
 	@echo Getting Simple Pairs...
 	@(cd $(VIM_HOME)/bundle && git clone https://github.com/vim-scripts/simple-pairs.git || true)
 	@echo Done.
-	@echo Getting SuperTab...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/ervandew/supertab.git || true)
+	@echo Getting Vim Easytags...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/xolox/vim-easytags.git || true)
 	@echo Done.
-	@echo Getting Clang Complete...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/Rip-Rip/clang_complete.git || true)
-	@echo Done.
-	@echo Getting Jedi - Python autocomplete...
-	@(cd $(VIM_HOME)/bundle && git clone https://github.com/davidhalter/jedi-vim.git || true)
+	@echo Getting Vim Miscellaneous Autoload...
+	@(cd $(VIM_HOME)/bundle && git clone https://github.com/xolox/vim-misc.git || true)
 	@echo Done.
 
 
@@ -58,13 +55,11 @@ vimrc_file:
 clean:
 	@echo Clean up .vim directory...
 	@rm -rf $(VIM_HOME)/autoload/pathogen.vim
-	@rm -rf $(VIM_HOME)/bundle/minibufexpl.vim
 	@rm -rf $(VIM_HOME)/bundle/snipmate.vim
 	@rm -rf $(VIM_HOME)/bundle/syntastic
 	@rm -rf $(VIM_HOME)/bundle/nerdtree
 	@rm -rf $(VIM_HOME)/bundle/simple-pairs
-	@rm -rf $(VIM_HOME)/bundle/supertab
-	@rm -rf $(VIM_HOME)/bundle/clang_complete
+	@rm -rf $(VIM_HOME)/bundle/easytags
 	@rm -f $(VIM_HOME)/colors/tibas.vim
 	@echo Done.
 	@echo Restoring old vimrc...
