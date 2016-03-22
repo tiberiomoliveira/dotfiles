@@ -8,8 +8,8 @@ set nobackup
 " Enable a column whit line number
 set number
 
-" Enable C style indenting 
-set cindent
+" Autoident files
+set smartindent
 " Number of spaces to use for each step of indent
 set shiftwidth=4
 " Number of spaces that a <Tab> in the file counts for
@@ -18,6 +18,9 @@ set tabstop=4
 set expandtab
 " Highlight cursor line
 set cursorline
+
+" Disable the auto comment for all files
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Set a fancy status line for VI
 set statusline=%<%F%h%m%r%w\ %9(%{&ff}%)\ \|\ %Y%=%-18.(A=\%03.3b\ -\ 0x\%02.2B%)\ %-14.(%04l,%04v%)\ %P
