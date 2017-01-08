@@ -29,7 +29,7 @@ set laststatus=2
 
 " Enable Pathogen
 filetype off
-execute pathogen#infect()
+call pathogen#infect()
 
 " Enable syntax
 syntax on
@@ -52,3 +52,13 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " NERDTreeTabs
 let g:nerdtree_tabs_open_on_console_startup=1
 let g:nerdtree_tabs_focus_on_files=1
+
+" Css Color
+let g:cssColorVimDoNotMessMyUpdatetime=1
+
+" Css3 Syntax, fix highlight for vertical-aligh, box-shadow and others
+augroup VimCSS3Syntax
+  autocmd!
+  autocmd FileType css setlocal iskeyword+=-
+augroup END
+
