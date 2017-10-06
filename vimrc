@@ -64,8 +64,8 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 if has("gui_running")
     set guioptions-=T
     set guioptions+=e
-    set t_Co=256
     set guitablabel=%M\ %t
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Regular " Install Powerline/fonts from git
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -143,22 +143,34 @@ let g:nerdtree_tabs_open_on_console_startup=1
 let g:nerdtree_tabs_focus_on_files=1
 
 " Airline configuration
+set noshowmode " Do not show default mode indicator
 let g:PowerLine_symbols = 'unicode'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+
 " Airline unicode symbols
+let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
-let g:airline_left_alt_sep = '»'
+let g:airline_right_sep = '«'
 let g:airline_right_sep = '◀'
-let g:airline_right_alt_sep = '«'
+let g:airline_symbols.linenr = '␊'
 let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 " Airline extension configuration
 let g:airline#extensions#hunks#enabled  = 0
 let g:airline#extensions#branch#enabled = 1
