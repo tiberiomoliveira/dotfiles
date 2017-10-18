@@ -181,15 +181,15 @@ let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
 
 " NerdTree-git-plugin
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹ ",
-    \ "Staged"    : "✚ ",
-    \ "Untracked" : "✭ ",
-    \ "Renamed"   : "➜ ",
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
     \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖ ",
-    \ "Dirty"     : "✗ ",
-    \ "Clean"     : "✔︎ ",
-    \ 'Ignored'   : '☒ ',
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : "☒",
     \ "Unknown"   : "?"
     \ }
 

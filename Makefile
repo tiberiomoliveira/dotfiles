@@ -1,5 +1,6 @@
 INSTALL_PATH = ~/
 VIM_HOME = $(INSTALL_PATH)/.vim
+BASH_DIR = $(INSTALL_PATH)/.bash
 
 all: vim_plug vim_theme vimrc_file
 
@@ -37,5 +38,21 @@ clean:
 	@[ -f $(INSTALL_PATH)/.vimrc_old ] && mv $(INSTALL_PATH)/.vimrc $(INSTALL_PATH)/.vimrc_bkp \
 					&&  @mv $(INSTALL_PATH)/.vimrc_old $(INSTALL_PATH)/.vimrc \
 					|| echo Old vimrc doesn\'t exist.
+	@echo Restoring old bashrc...
+	@[ -f $(INSTALL_PATH)/.bashrc_old ] && mv $(INSTALL_PATH)/.bashrc $(INSTALL_PATH)/.bashrc_bkp \
+					&&  @mv $(INSTALL_PATH)/.bashrc_old $(INSTALL_PATH)/.bashrc \
+					|| echo Old vimrc doesn\'t exist.
 	@echo Done.
 
+bashrc:
+	@echo Configure the bashrc
+	@[ -d $(BASH_DIR)  ] || mkdir $(BASH_DIR)
+	@wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P $(BASH_DIR)
+	@cp LESS_TERMCAP $(INSTALL_PATH)/.LESS_TERMCAP
+	@echo Backing up the old bashrc...
+	@[ -f $(INSTALL_PATH)/.bashrc ] && cp $(INSTALL_PATH)/.bashrc $(INSTALL_PATH)/.bashrc_old \
+					|| echo bashrc doesn\'t exist.
+	@echo Done.
+	@echo Adding new bashrc lines
+	@echo bashrc >> $(INSTALL_PATH)/.bashrc
+	@echo Done.
