@@ -1,8 +1,6 @@
 INSTALL_PATH = ~/
 VIM_HOME = $(INSTALL_PATH)/.vim
-BASH_DIR = $(INSTALL_PATH)/.bash
-
-all: vim_plug vim_theme vimrc_file
+all: vim_plug vim_theme vimrc_file bashrc gitconfig
 
 vim_plug:
 	@[ -d $(VIM_HOME) ] || mkdir -p $(VIM_HOME)
@@ -46,8 +44,6 @@ clean:
 
 bashrc:
 	@echo Configure the bashrc
-	@[ -d $(BASH_DIR)  ] || mkdir $(BASH_DIR)
-	@wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P $(BASH_DIR)
 	@cp LESS_TERMCAP $(INSTALL_PATH)/.LESS_TERMCAP
 	@echo Backing up the old bashrc...
 	@[ -f $(INSTALL_PATH)/.bashrc ] && cp $(INSTALL_PATH)/.bashrc $(INSTALL_PATH)/.bashrc_old \
@@ -55,4 +51,14 @@ bashrc:
 	@echo Done.
 	@echo Adding new bashrc lines
 	@echo bashrc >> $(INSTALL_PATH)/.bashrc
+	@echo Done.
+
+gitconfig:
+	@echo Configure the gitconfig
+	@echo Backing up the old gitconfig...
+	@[ -f $(INSTALL_PATH)/.gitconfig ] && cp $(INSTALL_PATH)/.gitconfig $(INSTALL_PATH)/.bashrc_old \
+					|| echo gitconfig doesn\'t exist.
+	@echo Done.
+	@echo Adding new gitconfig lines
+	@echo gitconfig >> $(INSTALL_PATH)/.gitconfig
 	@echo Done.
