@@ -21,7 +21,7 @@ else
   export TERM='xterm-color'
 fi
 
-source /etc/bash_completion.d/git-prompt
+source /usr/share/git/completion/git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=true
 # Creates the bash_prompt function
 bash_prompt () {

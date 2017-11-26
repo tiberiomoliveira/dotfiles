@@ -12,4 +12,4 @@ The plugins are:
   - Easytags
   - Miscellaneous Autoload
 
-To download the plugins and install the files, you just have to run 'make'. You need to change the variable INSTALL_PATH inside the Makefile in order to enter the right home path.
+To download the plugins and install the files, you just have to run 'make'. You need to change the variable INSTALL_PATH inside the Makefile in order to enter the right home path, if needed. To actual install the plugins with vim-plug just open Vim and enter :PlugInstall command.
