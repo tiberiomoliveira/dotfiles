@@ -17,8 +17,10 @@ set mouse=r
 set nobackup
 set nowb
 set noswapfile
-" Enable a column whit line number
+" Enable the line number column
 set number
+" Enable invisible characters
+set list
 
 " No annoying sound on errors
 set noerrorbells
@@ -55,8 +57,17 @@ syntax on
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Set a fancy status line for VI
-"set statusline=%<%F%h%m%r%w\ %9(%{&ff}%)\ \|\ %Y%=%-18.(A=\%03.3b\ -\ 0x\%02.2B%)\ %-14.(%04l,%04v%)\ %P
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set statusline=   " Clear the statusline for when vimrc is reloaded
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%f\                          " file name
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%=                           " right align
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset"
 " Let status line always visible 
 "set laststatus=2
 
