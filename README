@@ -1,15 +1,19 @@
-VIM like an IDE
-===============
+# dotfiles
 
-I try to get together the more useful plugins for vim and find a way to install then easyly.
+## vimrc
 
-The plugins are:
-  - Snipmate
-  - Syntastic
-  - NerdTree
-  - NerdTree Tabs
-  - Simple Pairs
-  - Easytags
-  - Miscellaneous Autoload
+In order to install all plugins, just execute `:PlugInstall` inside vim.
 
-To download the plugins and install the files, you just have to run 'make'. You need to change the variable INSTALL_PATH inside the Makefile in order to enter the right home path, if needed. To actual install the plugins with vim-plug just open Vim and enter :PlugInstall command.
+## gitconfig
+
+This gitconfig uses vimdiff to view diffs and merges.
+
+### vimdiff cheat sheet
+`]c`        - next difference
+`[c`        - previous difference
+`do`        - diff obtain
+`dp`        - diff put
+`zo`        - open folded text
+`zc`        - close folded text
+:diffupdate - re-scan the files for differences
+

@@ -1,5 +1,7 @@
-" My own theme
-colorscheme tibas
+" Be no vi compatible
+set nocompatible
+" Set a good colorscheme
+colorscheme gruvbox
 " Number of colors supported
 set t_Co=256
 " Searching
@@ -17,9 +19,9 @@ set mouse=r
 set nobackup
 set nowb
 set noswapfile
-" Enable the line number column
+" Enable a column whit line number
 set number
-" Enable invisible characters
+" Show invisible characters
 set list
 
 " No annoying sound on errors
@@ -43,33 +45,49 @@ set smarttab
 " Highlight cursor line
 set cursorline
 
+" Show trailing whitespace and spaces before a tab:
+:highlight ExtraWhitespace ctermbg=red guibg=red
+:autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\\t/
+
 " Ignore files with following extentions:
 set wildignore+=*.d,*.so,*.a,*.o,*.DEP,*.swp,*.zip
 
+" Colunm for text line limit
 if exists("&colorcolumn")
     set colorcolumn=81
 endif
 
 " Enable syntax highlighting
-syntax on
+syntax enable
 
 " Disable the auto comment for all files
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" Set a fancy status line for VI
+" Set a fancy status line for VI/VIM
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
 set statusline=   " Clear the statusline for when vimrc is reloaded
-set statusline+=%-3.3n\                      " buffer number
-set statusline+=%f\                          " file name
+set statusline+=%{StatuslineGit()}           " branch name
+set statusline+=-\ %f                        " file name
 set statusline+=%h%m%r%w                     " flags
 set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
 set statusline+=%{&fileformat}]              " file format
 set statusline+=%=                           " right align
-set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
-set statusline+=%b,0x%-8B\                   " current char
-set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset"
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')} " highlight
+set statusline+=\ %b,0x%-8B                   " current char
+set statusline+=\ %-7.(%l,%c%V%)\ %<          " offset and line/column/percent_file
+set statusline+=%{strftime('%a\ %b\ %d\ %H:%M')}
+set statusline+=\ %P 
 " Let status line always visible 
-"set laststatus=2
+set laststatus=2
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -87,22 +105,24 @@ set ffs=unix,dos,mac
 
 " Vim-Plug installation
 call plug#begin('~/.vim/plugged')
+    " colorscheme
+    Plug 'morhetz/gruvbox'
     " editor plugins
     Plug 'jiangmiao/auto-pairs'
-    Plug 'kien/ctrlp.vim'
-    Plug 'scrooloose/nerdtree'
-    Plug 'jistr/vim-nerdtree-tabs'
-    Plug 'vim-airline/vim-airline'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'adelarsq/vim-matchit'
+    Plug 'tpope/vim-surround'
     " C/C++ plugins
     Plug 'vim-syntastic/syntastic'
     Plug 'myint/syntastic-extras'
     Plug 'xolox/vim-easytags'
     Plug 'xolox/vim-misc'
     Plug 'majutsushi/tagbar'
+    " Ruby plugin
+    Plug 'vim-ruby/vim-ruby'
     " git plugins
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
     " html/css plugins
     Plug 'ap/vim-css-color'
     Plug 'hail2u/vim-css3-syntax'
@@ -115,14 +135,22 @@ call plug#end()
 filetype plugin on
 filetype plugin indent on
 
+" Gruvbox theme
+set background=dark
+
+" Fix backspace key
+set backspace=indent,eol,start
+
 " Easytag plugin
 let g:easytags_file = '~/.vim/tags'
+
+" Tagbar from Exuberant Ctags
+nmap <F8> :TagbarToggle<CR>
 
 " Syntastic configuration
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -137,72 +165,6 @@ let g:syntastic_json_checkers = ['json_tool']
 let g:syntastic_python_checkers = ['pyflakes_with_warnings']
 let g:syntastic_gitcommit_checkers = ['language_check']
 let g:syntastic_svn_checkers = ['language_check']
-
-" NERDTree
-" Open NerdTree on vim startup even if it is not file open
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" Open NerdTree on vim startup even if it is opening a directory
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-" Let file be the highlight window
-autocmd VimEnter * wincmd w
-" Close vim when the NerdTree is the last window opended
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" NERDTreeTabs
-let g:nerdtree_tabs_open_on_console_startup=1
-let g:nerdtree_tabs_focus_on_files=1
-
-" Airline configuration
-set noshowmode " Do not show default mode indicator
-let g:PowerLine_symbols = 'unicode'
-let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" Airline unicode symbols - you need to install fonts-powerline package
-let g:airline_left_sep = '▶'
-let g:airline_left_alt_sep = '»'
-let g:airline_right_sep = '◀'
-let g:airline_right_alt_sep = '«'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-" Airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-" Airline extension configuration
-let g:airline#extensions#hunks#enabled  = 0
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_section_a = airline#section#create(['mode'])
-let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
-
-" NerdTree-git-plugin
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : "☒",
-    \ "Unknown"   : "?"
-    \ }
 
 " Css Color
 let g:cssColorVimDoNotMessMyUpdatetime=1

@@ -8,7 +8,9 @@ alias grep='grep --color'
 
 # Global editor, user choice
 export EDITOR=vim
-
+export VISUAL=vim
+# Set vi mode on bash
+set -o vi
 # Get color support for less
 export LESS="--RAW-CONTROL-CHARS"
 # Use colors for less, man, etc.
@@ -21,14 +23,33 @@ else
   export TERM='xterm-color'
 fi
 
-source /usr/share/git/completion/git-prompt.sh
+# CLI color definition
+BLUE="\e[34;1m"
+CYAN="\e[36;1m"
+GREEN="\e[32;1m"
+RED="\e[31;1m"
+YELLOW="\e[33;1m"
+WHITE="\e[97m"
+RESET="\e[m"
+NEW_LINE="\\n"
+# Source the git completion script
+GIT_COMPLETION=/usr/share/git/completion/git-prompt.sh
+if [ ! -f $GIT_COMPLETION ]; then
+    GIT_COMPLETION=~/.git-prompt.sh
+    if [ ! -f $GIT_COMPLETION ]; then
+        curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
+    fi
+fi
 GIT_PS1_SHOWDIRTYSTATE=true
-# Creates the bash_prompt function
-bash_prompt () {
- 
-    # This is what actually sets our PS1. The ${git prompt} is what will display our git status.
-    PS1="\[\e[0;36m\]┌─\[\e[1;37m\]\u@\h\[\e[0m\]\[\e[0;36m\]─\[\e[0;93m\]\w\[\e[1;37m\]$(__git_ps1)\n\[\e[0;36m\]└─\[\e[1;32m\][\D{%F %R}]\[\e[0m\]\$(if [[ \$? == 0 ]]; then echo \"\[\033[0;32m\]$\"; else echo \"\[\033[0;31m\]$\"; fi)\[\033[00m\] "
- 
-}
-# PROMPT_COMMAND is run just before the PS1 is printed. We've set it to run our bash_prompt function.
-PROMPT_COMMAND=bash_prompt
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWUPSTREAM="auto"
+GIT_PS1_HIDE_IF_PWD_IGNORED=true
+GIT_PS1_SHOWCOLORHINTS=true
+source $GIT_COMPLETION
+# This is what actually sets our PS1.
+PS1="\[$RESET\]┌─\[$BLUE\]\u\[$RESET\]@\[$RED\]\h\[$RESET\]─\[$YELLOW\]\w$NEW_LINE\[$RESET\]└─\[$GREEN\][\D{%F %R}]\[$CYAN\]\$(__git_ps1) \[$WHITE\]$ \[$RESET\]"
+
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+
