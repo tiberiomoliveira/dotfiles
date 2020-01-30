@@ -1,19 +1,15 @@
-[merge]
-    tool = meld
+[diff]
+	tool = vimdiff
 
-[mergetool "meld"]
-    cmd = meld --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\" --label \"MERGE (REMOTE BASE MY)\"
-    trustExitCode = false
+[difftool]
+	prompt = false
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
 
 [mergetool]
-    prompt = false
-    keepBackup = false
-
-[diff]
-    guitool = meld
-
-[difftool "meld"]
-    cmd = meld \"$LOCAL\" \"$REMOTE\" --label \"DIFF (ORIGINAL MY)\"
+	prompt = false
 
 [color]
     branch = auto
