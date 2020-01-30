@@ -5,14 +5,23 @@ alias mv='mv -i'
 
 # Everybody like colors
 alias grep='grep --color'
+alias less='less -r'
+alias ls='ls --color=always'
+export LS_COLORS="di=1;36:ln=1;31:so=37:pi=1;35:ex=37:bd=37:cd=37:su=37:sg=37:tw=1;36:ow=1;36"
 
 # Global editor, user choice
 export EDITOR=vim
 export VISUAL=vim
+
 # Set vi mode on bash
 set -o vi
+
+# Correct tmux color problem
+alias tmux='tmux -2'
+
 # Get color support for less
 export LESS="--RAW-CONTROL-CHARS"
+
 # Use colors for less, man, etc.
 [[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
 
@@ -32,6 +41,7 @@ YELLOW="\e[33;1m"
 WHITE="\e[97m"
 RESET="\e[m"
 NEW_LINE="\\n"
+
 # Source the git completion script
 GIT_COMPLETION=/usr/share/git/completion/git-prompt.sh
 if [ ! -f $GIT_COMPLETION ]; then

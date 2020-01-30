@@ -1,6 +1,5 @@
-" Be no vi compatible
-set nocompatible
 " Set a good colorscheme
+let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 " Number of colors supported
 set t_Co=256
@@ -13,15 +12,17 @@ set lazyredraw
 " Turn on the wild menu
 set wildmenu
 set wildmode=list:longest,full
-" Set mouse support
-set mouse=r
 " Disable backup file
 set nobackup
 set nowb
 set noswapfile
-" Enable a column whit line number
-set number
-" Show invisible characters
+" Enable a column line number for the current line and relative line number
+" for the rest
+set relativenumber number
+setglobal relativenumber number
+autocmd BufEnter * set relativenumber number
+let g:netrw_bufsettings = "noma nomod nu nobl nowrap ro rnu"
+" Enable invisible characters
 set list
 
 " No annoying sound on errors
@@ -45,10 +46,6 @@ set smarttab
 " Highlight cursor line
 set cursorline
 
-" Show trailing whitespace and spaces before a tab:
-:highlight ExtraWhitespace ctermbg=red guibg=red
-:autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\\t/
-
 " Ignore files with following extentions:
 set wildignore+=*.d,*.so,*.a,*.o,*.DEP,*.swp,*.zip
 
@@ -57,8 +54,17 @@ if exists("&colorcolumn")
     set colorcolumn=81
 endif
 
-" Enable syntax highlighting
-syntax enable
+" Set compatibility to Vim only
+set nocompatible
+
+" Helps force plug-ins to load correctly when it is turned back on below
+filetype off
+
+" Turn on syntax highlighting
+syntax on
+
+" For plug-ins to load correctly
+filetype plugin indent on
 
 " Disable the auto comment for all files
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -81,21 +87,11 @@ set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
 set statusline+=%{&fileformat}]              " file format
 set statusline+=%=                           " right align
-set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')} " highlight
-set statusline+=\ %b,0x%-8B                   " current char
-set statusline+=\ %-7.(%l,%c%V%)\ %<          " offset and line/column/percent_file
-set statusline+=%{strftime('%a\ %b\ %d\ %H:%M')}
-set statusline+=\ %P 
-" Let status line always visible 
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset"
+" Let status line always visible
 set laststatus=2
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions+=e
-    set guitablabel=%M\ %t
-    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Regular " Install Powerline/fonts from git
-endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -109,17 +105,18 @@ call plug#begin('~/.vim/plugged')
     Plug 'morhetz/gruvbox'
     " editor plugins
     Plug 'jiangmiao/auto-pairs'
-    Plug 'ctrlpvim/ctrlp.vim'
     Plug 'adelarsq/vim-matchit'
     Plug 'tpope/vim-surround'
+    Plug 'will133/vim-dirdiff'
+    Plug 'vim-scripts/ShowTrailingWhitespace'
     " C/C++ plugins
     Plug 'vim-syntastic/syntastic'
     Plug 'myint/syntastic-extras'
     Plug 'xolox/vim-easytags'
     Plug 'xolox/vim-misc'
     Plug 'majutsushi/tagbar'
-    " Ruby plugin
-    Plug 'vim-ruby/vim-ruby'
+    " Go plugins
+    Plug 'fatih/vim-go'
     " git plugins
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
@@ -132,10 +129,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomtom/tcomment_vim'
 call plug#end()
 
-filetype plugin on
-filetype plugin indent on
-
-" Gruvbox theme
+" Gruvbox theme config
 set background=dark
 
 " Fix backspace key
@@ -151,6 +145,7 @@ nmap <F8> :TagbarToggle<CR>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -178,14 +173,14 @@ augroup END
 " Emmet vim - HTML/CSS
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+"DirDiff configuration
+let g:DirDiffExcludes = "*.class,*.o,*.pyc"
 
 "--------- HELPERS ---------
-"  Delete trailing white space on save
+"  Delete trailing whitespace on save
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
