@@ -11,6 +11,9 @@
 [mergetool]
 	prompt = false
 
+[code]
+	editor = vim
+
 [color]
     branch = auto
     diff = auto

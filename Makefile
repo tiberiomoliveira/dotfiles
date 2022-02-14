@@ -1,53 +1,32 @@
-INSTALL_PATH = ~/
+INSTALL_PATH = ./test_dir
 VIM_HOME = $(INSTALL_PATH)/.vim
-.PHONY: vim_plug vim_theme vimrc_file bashrc gitconfig
+HOME_FILES = bashrc gitconfig vimrc termite.config tmux.conf LESS_TERMCAP
+#CONFIG_FILES = i3-config i3-status
+TARGETS_COPY = $(addsuffix .copy,$(HOME_FILES))
+TARGETS_CLEAN = $(addsuffix .clean,$(HOME_FILES))
+.PHONY: $(TARGETS_COPY) $(TARGETS_CLEAN)
 
-all: vimrc_file bashrc gitconfig
+all: $(TARGETS_COPY)
 
-vimrc_file:
-	@echo Configure the vimrc
-	@echo Backing up the old vimrc...
-	@[ -f $(INSTALL_PATH)/.vimrc ] && mv $(INSTALL_PATH)/.vimrc $(INSTALL_PATH)/.vimrc_old \
-					|| echo vimrc doesn\'t exist.
-	@echo Done.
-	@echo Copying the new vimrc
-	@cp vimrc $(INSTALL_PATH)/.vimrc
-	@echo Done.
-
-bashrc:
-	@echo Configure the .bashrc
-	@cp LESS_TERMCAP $(INSTALL_PATH)/.LESS_TERMCAP
-	@echo Backing up the old .bashrc...
-	@[ -f $(INSTALL_PATH)/.bashrc ] && cp $(INSTALL_PATH)/.bashrc $(INSTALL_PATH)/.bashrc_old \
-					|| echo .bashrc doesn\'t exist.
-	@echo Done.
-	@echo Adding new .bashrc lines
-	@cat ./bashrc >> $(INSTALL_PATH)/.bashrc
+$(TARGETS_COPY): %.copy:
+	@[ -f $(INSTALL_PATH)/.$* ] && echo Backing up the old .$*\
+		&& cp $(INSTALL_PATH)/.$* $(INSTALL_PATH)/.$*_old \
+		|| echo .$* doesn\'t exist.
+	@echo Copying the new .$*
+	cat $* >> $(INSTALL_PATH)/.$*
 	@echo Done.
 
-gitconfig:
-	@echo Configure the .gitconfig
-	@echo Backing up the old .gitconfig...
-	@[ -f $(INSTALL_PATH)/.gitconfig ] && cp $(INSTALL_PATH)/.gitconfig $(INSTALL_PATH)/.bashrc_old \
-					|| echo .gitconfig doesn\'t exist.
-	@echo Done.
-	@echo Adding new .gitconfig lines
-	@cat ./gitconfig >> $(INSTALL_PATH)/.gitconfig
+vim_home.clean:
+	@echo Clean up .vim directory
+	rm -rf $(VIM_HOME)/autoload/plug.vim
+	rm -rf $(VIM_HOME)/plugged
+	rm -rf $(VIM_HOME)/colors
 	@echo Done.
 
-clean:
-	@echo Clean up .vim directory...
-	@rm -rf $(VIM_HOME)/autoload/plug.vim
-	@rm -rf $(VIM_HOME)/plugged
-	@rm -rf $(VIM_HOME)/colors
-	@echo Done.
-	@echo Restoring old vimrc...
-	@[ -f $(INSTALL_PATH)/.vimrc_old ] && mv $(INSTALL_PATH)/.vimrc $(INSTALL_PATH)/.vimrc_bkp \
-					&&  @mv $(INSTALL_PATH)/.vimrc_old $(INSTALL_PATH)/.vimrc \
-					|| echo Old vimrc doesn\'t exist.
-	@echo Restoring old bashrc...
-	@[ -f $(INSTALL_PATH)/.bashrc_old ] && mv $(INSTALL_PATH)/.bashrc $(INSTALL_PATH)/.bashrc_bkp \
-					&&  @mv $(INSTALL_PATH)/.bashrc_old $(INSTALL_PATH)/.bashrc \
-					|| echo Old vimrc doesn\'t exist.
-	@echo Done.
+$(TARGETS_CLEAN): %.clean:
+	@echo Restoring old $*...
+	@[ -f $(INSTALL_PATH)/.$*_old ] && mv $(INSTALL_PATH)/.$* $(INSTALL_PATH)/.$*_bkp \
+		&& mv $(INSTALL_PATH)/.$*_old $(INSTALL_PATH)/.$* \
+		|| echo .$*_old doesn\'t exist.
 
+clean: | vim_home.clean $(TARGETS_CLEAN)

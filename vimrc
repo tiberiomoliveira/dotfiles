@@ -1,6 +1,3 @@
-" Set a good colorscheme
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
 " Number of colors supported
 set t_Co=256
 " Searching
@@ -12,6 +9,8 @@ set lazyredraw
 " Turn on the wild menu
 set wildmenu
 set wildmode=list:longest,full
+" Set mouse support
+set mouse=r
 " Disable backup file
 set nobackup
 set nowb
@@ -39,6 +38,8 @@ set wrap
 set shiftwidth=4
 " Number of spaces that a <Tab> in the file counts for
 set tabstop=4
+" Sets the number of columns for a <Tab>
+set softtabstop=4
 " Use the appropriate number of spaces to insert a <Tab>
 set expandtab
 " Be smart when using tabs
@@ -129,8 +130,15 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomtom/tcomment_vim'
 call plug#end()
 
+" Set a good colorscheme
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+
 " Gruvbox theme config
 set background=dark
+
+" Let colorscheme have a transparenty background
+hi Normal ctermbg=NONE guibg=NONE
 
 " Fix backspace key
 set backspace=indent,eol,start
@@ -161,10 +169,10 @@ let g:syntastic_python_checkers = ['pyflakes_with_warnings']
 let g:syntastic_gitcommit_checkers = ['language_check']
 let g:syntastic_svn_checkers = ['language_check']
 
-" Css Color
+" CSS Color
 let g:cssColorVimDoNotMessMyUpdatetime=1
 
-" Css3 Syntax, fix highlight for vertical-aligh, box-shadow and others
+" CSS3 Syntax, fix highlight for vertical-aligh, box-shadow and others
 augroup VimCSS3Syntax
   autocmd!
   autocmd FileType css setlocal iskeyword+=-
@@ -173,14 +181,14 @@ augroup END
 " Emmet vim - HTML/CSS
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
-"DirDiff configuration
+
+" DirDiff configuration
 let g:DirDiffExcludes = "*.class,*.o,*.pyc"
 
 "--------- HELPERS ---------
-"  Delete trailing whitespace on save
+" Delete trailing whitespace on save
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-

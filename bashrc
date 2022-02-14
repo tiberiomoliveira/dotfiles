@@ -4,14 +4,20 @@ alias rm='rm -i'
 alias mv='mv -i'
 
 # Everybody like colors
-alias grep='grep --color'
+alias dir='dir --color=auto'
+alias dmesg='dmesg --color'
 alias less='less -r'
 alias ls='ls --color=always'
+alias grep='grep --color=auto'
 export LS_COLORS="di=1;36:ln=1;31:so=37:pi=1;35:ex=37:bd=37:cd=37:su=37:sg=37:tw=1;36:ow=1;36"
+
+# Terminal choice
+export TERMINAL="cool-retro-term"
 
 # Global editor, user choice
 export EDITOR=vim
 export VISUAL=vim
+export GIT_EDITOR="$VISUAL"
 
 # Set vi mode on bash
 set -o vi
