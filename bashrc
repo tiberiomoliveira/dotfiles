@@ -48,24 +48,30 @@ WHITE="\e[97m"
 RESET="\e[m"
 NEW_LINE="\\n"
 
-# Source the git completion script
-GIT_COMPLETION=/usr/share/git/completion/git-prompt.sh
-if [ ! -f $GIT_COMPLETION ]; then
-    GIT_COMPLETION=~/.git-prompt.sh
-    if [ ! -f $GIT_COMPLETION ]; then
-        curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
+check_git_script () {
+    local GIT_SCRIPT=/usr/share/git/completion/$1
+    if [ ! -f $GIT_SCRIPT ]; then
+        GIT_SCRIPT=~/.$1
+        if [ ! -f $GIT_SCRIPT ]; then
+            curl https://raw.githubusercontent.com/git/git/master/contrib/completion/$1 -o ~/.$1
+        fi
     fi
-fi
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
-GIT_PS1_SHOWUPSTREAM="auto"
-GIT_PS1_HIDE_IF_PWD_IGNORED=true
-GIT_PS1_SHOWCOLORHINTS=true
-source $GIT_COMPLETION
+    if [ "$1" == "git-prompt.sh" ]; then
+        #GIT_PS1_SHOWDIRTYSTATE=1
+        #GIT_PS1_SHOWSTASHSTATE=1
+        #GIT_PS1_SHOWUNTRACKEDFILES=1
+        #GIT_PS1_SHOWUPSTREAM="auto"
+        GIT_PS1_HIDE_IF_PWD_IGNORED=1
+        GIT_PS1_SHOWCOLORHINTS=1
+    fi
+    # Source the git script
+    . $GIT_SCRIPT
+}
+check_git_script git-completion.bash
+check_git_script git-prompt.sh
+
 # This is what actually sets our PS1.
-PS1="\[$RESET\]┌─\[$BLUE\]\u\[$RESET\]@\[$RED\]\h\[$RESET\]─\[$YELLOW\]\w$NEW_LINE\[$RESET\]└─\[$GREEN\][\D{%F %R}]\[$CYAN\]\$(__git_ps1) \[$WHITE\]$ \[$RESET\]"
+PS1="\[$RESET\]┌─\[$BLUE\]\u\[$RESET\]@\[$RED\]\h\[$RESET\]─\[$YELLOW\]\w$NEW_LINE\[$RESET\]└─\[$GREEN\][\D{%F %R}]\[$CYAN\]"'$(__git_ps1 " (%s)")'" \[$WHITE\]$ \[$RESET\]"
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-

@@ -1,3 +1,9 @@
+" Gruvbox theme config
+autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+set background=dark
+
 " Number of colors supported
 set t_Co=256
 " Searching
@@ -42,11 +48,12 @@ set tabstop=4
 set softtabstop=4
 " Use the appropriate number of spaces to insert a <Tab>
 set expandtab
-" Be smart when using tabs
+" Be smart when using tabs - it respects 'tabstop'. 'shiftwidth', and 'softtab'
 set smarttab
 " Highlight cursor line
 set cursorline
-
+" Enable spell correction
+set spell
 " Ignore files with following extentions:
 set wildignore+=*.d,*.so,*.a,*.o,*.DEP,*.swp,*.zip
 
@@ -70,27 +77,6 @@ filetype plugin indent on
 " Disable the auto comment for all files
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" Set a fancy status line for VI/VIM
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
-
-set statusline=   " Clear the statusline for when vimrc is reloaded
-set statusline+=%{StatuslineGit()}           " branch name
-set statusline+=-\ %f                        " file name
-set statusline+=%h%m%r%w                     " flags
-set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
-set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
-set statusline+=%{&fileformat}]              " file format
-set statusline+=%=                           " right align
-set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
-set statusline+=%b,0x%-8B\                   " current char
-set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset"
 " Let status line always visible
 set laststatus=2
 
@@ -108,16 +94,18 @@ call plug#begin('~/.vim/plugged')
     Plug 'jiangmiao/auto-pairs'
     Plug 'adelarsq/vim-matchit'
     Plug 'tpope/vim-surround'
-    Plug 'will133/vim-dirdiff'
+    Plug 'will133/vim-dirdiff', { 'on': 'DirDiff' }
     Plug 'vim-scripts/ShowTrailingWhitespace'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     " C/C++ plugins
     Plug 'vim-syntastic/syntastic'
     Plug 'myint/syntastic-extras'
-    Plug 'xolox/vim-easytags'
     Plug 'xolox/vim-misc'
     Plug 'majutsushi/tagbar'
     " Go plugins
-    Plug 'fatih/vim-go'
+    Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     " git plugins
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
@@ -130,34 +118,18 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomtom/tcomment_vim'
 call plug#end()
 
-" Set a good colorscheme
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
-
-" Gruvbox theme config
-set background=dark
-
 " Let colorscheme have a transparenty background
 hi Normal ctermbg=NONE guibg=NONE
 
 " Fix backspace key
 set backspace=indent,eol,start
 
-" Easytag plugin
-let g:easytags_file = '~/.vim/tags'
-
-" Tagbar from Exuberant Ctags
-nmap <F8> :TagbarToggle<CR>
-
 " Syntastic configuration
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = {"mode": "passive"}
 
 " Syntastic-extras configuration
 let g:syntastic_c_checkers = ['check']
@@ -184,6 +156,50 @@ autocmd FileType html,css EmmetInstall
 
 " DirDiff configuration
 let g:DirDiffExcludes = "*.class,*.o,*.pyc"
+
+" ---- vim-airline ----
+" Choose theme
+let g:airline_powerline_theme = 'base16_gruvbox_dark_hard'
+" Enable powerline fonts
+let g:airline_powerline_fonts = 1
+" Remove empty angle at the end
+let g:airline_skip_empty_sections = 1
+" Extension for tab line
+let g:airline#extensions#tabline#enable = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" Caches the changes to the highlighting groups
+let g:airline_highlighting_cache = 1
+" Shortform text for mode map
+let g:airline_mode_map = {
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S-L',
+    \ ''     : 'S-B',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V-L',
+    \ ''     : 'V-B',
+    \ }
+" Display all buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Check for symbols
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" Unicode symbol - Fixing wrong unicode character
+"let g:airline_symbols.colnr = "\u33c7"
 
 "--------- HELPERS ---------
 " Delete trailing whitespace on save
