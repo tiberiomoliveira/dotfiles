@@ -1,9 +1,3 @@
-" Gruvbox theme config
-autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
-set background=dark
-
 " Number of colors supported
 set t_Co=256
 " Searching
@@ -118,6 +112,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomtom/tcomment_vim'
 call plug#end()
 
+" Gruvbox theme config
+autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+set background=dark
+
 " Let colorscheme have a transparenty background
 hi Normal ctermbg=NONE guibg=NONE
 
@@ -199,7 +199,7 @@ if !exists('g:airline_symbols')
 endif
 
 " Unicode symbol - Fixing wrong unicode character
-"let g:airline_symbols.colnr = "\u33c7"
+let g:airline_symbols.colnr = "\u2105"
 
 "--------- HELPERS ---------
 " Delete trailing whitespace on save
