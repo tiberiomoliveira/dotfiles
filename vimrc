@@ -23,13 +23,11 @@ autocmd BufEnter * set relativenumber number
 let g:netrw_bufsettings = "noma nomod nu nobl nowrap ro rnu"
 " Enable invisible characters
 set list
-
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-
 " Autoident files
 set smartindent
 " Wrap lines
@@ -46,39 +44,34 @@ set expandtab
 set smarttab
 " Highlight cursor line
 set cursorline
+" Highlight cursor column
+set cursorcolumn
 " Enable spell correction
 set spell
 " Ignore files with following extentions:
 set wildignore+=*.d,*.so,*.a,*.o,*.DEP,*.swp,*.zip
-
+" Set compatibility to Vim only
+set nocompatible
+" Helps force plug-ins to load correctly when it is turned back on below
+filetype off
+" Turn on syntax highlighting
+syntax on
+" For plug-ins to load correctly
+filetype plugin indent on
+" Disable the auto comment for all files
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" Let status line always visible
+set laststatus=2
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+" Fix backspace key
+set backspace=indent,eol,start
 " Colunm for text line limit
 if exists("&colorcolumn")
     set colorcolumn=81
 endif
-
-" Set compatibility to Vim only
-set nocompatible
-
-" Helps force plug-ins to load correctly when it is turned back on below
-filetype off
-
-" Turn on syntax highlighting
-syntax on
-
-" For plug-ins to load correctly
-filetype plugin indent on
-
-" Disable the auto comment for all files
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" Let status line always visible
-set laststatus=2
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
 
 " Vim-Plug installation
 call plug#begin('~/.vim/plugged')
@@ -93,11 +86,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+    " Linter
+    Plug 'dense-analysis/ale'
     " C/C++ plugins
-    Plug 'vim-syntastic/syntastic'
-    Plug 'myint/syntastic-extras'
-    Plug 'xolox/vim-misc'
-    Plug 'majutsushi/tagbar'
+    Plug 'xavierd/clang_complete'
+    Plug 'honza/vim-snippets'
     " Go plugins
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     " git plugins
@@ -112,7 +105,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomtom/tcomment_vim'
 call plug#end()
 
-" Gruvbox theme config
+" ---- Gruvbox theme config ----
 autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE
 let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
@@ -121,40 +114,20 @@ set background=dark
 " Let colorscheme have a transparenty background
 hi Normal ctermbg=NONE guibg=NONE
 
-" Fix backspace key
-set backspace=indent,eol,start
-
-" Syntastic configuration
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = {"mode": "passive"}
-
-" Syntastic-extras configuration
-let g:syntastic_c_checkers = ['check']
-let g:syntastic_cpp_checkers = ['check']
-let g:syntastic_make_checkers = ['gnumake']
-let g:syntastic_javascript_checkers = ['json_tool']
-let g:syntastic_json_checkers = ['json_tool']
-let g:syntastic_python_checkers = ['pyflakes_with_warnings']
-let g:syntastic_gitcommit_checkers = ['language_check']
-let g:syntastic_svn_checkers = ['language_check']
-
-" CSS Color
+" ---- CSS Color ----
 let g:cssColorVimDoNotMessMyUpdatetime=1
 
-" CSS3 Syntax, fix highlight for vertical-aligh, box-shadow and others
+" ---- CSS3 Syntax, fix highlight for vertical-align, box-shadow and others ----
 augroup VimCSS3Syntax
   autocmd!
   autocmd FileType css setlocal iskeyword+=-
 augroup END
 
-" Emmet vim - HTML/CSS
+" ---- Emmet vim - HTML/CSS ----
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 
-" DirDiff configuration
+" ---- DirDiff configuration ----
 let g:DirDiffExcludes = "*.class,*.o,*.pyc"
 
 " ---- vim-airline ----
@@ -169,7 +142,7 @@ let g:airline#extensions#tabline#enable = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " Caches the changes to the highlighting groups
 let g:airline_highlighting_cache = 1
-" Shortform text for mode map
+" Short form text for mode map
 let g:airline_mode_map = {
     \ '__'     : '-',
     \ 'c'      : 'C',
@@ -201,8 +174,25 @@ endif
 " Unicode symbol - Fixing wrong unicode character
 let g:airline_symbols.colnr = "\u2105"
 
+" Integrate ALE with vim-airline
+let g:airline#extensions#ale#enabled = 1
+
+" ---- clang_complete ----
+" Path to directory where library can be found
+let g:clang_library_path = '/usr/lib/llvm-10/lib/libclang.so.1'
+" If there's an error, show it
+let g:clang_complete_copen = 1
+let g:clang_complete_macros = 1
+let g:clang_complete_patterns = 1
+" Clang snippets
+let g:clang_snippets = 1
+" Better conceal level for clang
+set conceallevel=2
+set concealcursor=vin
+let g:clang_conceal_snippets = 1
+
 "--------- HELPERS ---------
-" Delete trailing whitespace on save
+" Delete trailing white-space on save
 func! DeleteTrailingWS()
   exe "normal mz"
   %s/\s\+$//ge

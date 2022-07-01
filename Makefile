@@ -1,6 +1,6 @@
-INSTALL_PATH = ./test_dir
+INSTALL_PATH = ~/
 VIM_HOME = $(INSTALL_PATH)/.vim
-HOME_FILES = bashrc gitconfig vimrc termite.config tmux.conf LESS_TERMCAP
+HOME_FILES = bashrc gitconfig vimrc tmux.conf LESS_TERMCAP
 #CONFIG_FILES = i3-config i3-status
 TARGETS_COPY = $(addsuffix .copy,$(HOME_FILES))
 TARGETS_CLEAN = $(addsuffix .clean,$(HOME_FILES))

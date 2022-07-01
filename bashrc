@@ -71,7 +71,7 @@ check_git_script git-completion.bash
 check_git_script git-prompt.sh
 
 # This is what actually sets our PS1.
-PS1="\[$RESET\]┌─\[$BLUE\]\u\[$RESET\]@\[$RED\]\h\[$RESET\]─\[$YELLOW\]\w$NEW_LINE\[$RESET\]└─\[$GREEN\][\D{%F %R}]\[$CYAN\]"'$(__git_ps1 " (%s)")'" \[$WHITE\]$ \[$RESET\]"
+PS1="\[$RESET\]┌─\[$BLUE\]\u\[$RESET\]@\[$RED\]\h\[$RESET\]\[$YELLOW\]\w$NEW_LINE\[$RESET\]└─\[$GREEN\][\D{%F %R}]\[$CYAN\]"'$(__git_ps1 " (%s)")'" \[$WHITE\]$ \[$RESET\]"
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
