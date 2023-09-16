@@ -1,36 +1,21 @@
-[diff]
-	tool = vimdiff
-
-[difftool]
-	prompt = false
-
-[merge]
-	tool = vimdiff
-	conflictstyle = diff3
-
-[mergetool]
-	prompt = false
-
-[code]
-	editor = vim
-
 [color]
     branch = auto
     diff = auto
     status = auto
+    ui = auto
 
-[color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+[code]
+    editor = vim
 
-[color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
+[diff]
+    tool = vimdiff
 
-[color "status"]
-    added = green
-    changed = yellow
-    untracked = cyan
+[difftool]
+    prompt = false
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false

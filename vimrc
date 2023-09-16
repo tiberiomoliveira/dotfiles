@@ -70,7 +70,7 @@ set ffs=unix,dos,mac
 set backspace=indent,eol,start
 " Colunm for text line limit
 if exists("&colorcolumn")
-    set colorcolumn=81
+    set colorcolumn=101
 endif
 
 " Vim-Plug installation
@@ -78,7 +78,7 @@ call plug#begin('~/.vim/plugged')
     " colorscheme
     Plug 'morhetz/gruvbox'
     " editor plugins
-    Plug 'jiangmiao/auto-pairs'
+    Plug 'tmsvg/pear-tree'
     Plug 'adelarsq/vim-matchit'
     Plug 'tpope/vim-surround'
     Plug 'will133/vim-dirdiff', { 'on': 'DirDiff' }
@@ -88,9 +88,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
     " Linter
     Plug 'dense-analysis/ale'
-    " C/C++ plugins
-    Plug 'xavierd/clang_complete'
+    " IDE plugins
     Plug 'honza/vim-snippets'
+    Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --clang-completer' }
     " Go plugins
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
     " git plugins
@@ -172,24 +172,10 @@ if !exists('g:airline_symbols')
 endif
 
 " Unicode symbol - Fixing wrong unicode character
-let g:airline_symbols.colnr = "\u2105"
+let g:airline_symbols.colnr = "\u2105 :"
 
 " Integrate ALE with vim-airline
 let g:airline#extensions#ale#enabled = 1
-
-" ---- clang_complete ----
-" Path to directory where library can be found
-let g:clang_library_path = '/usr/lib/llvm-10/lib/libclang.so.1'
-" If there's an error, show it
-let g:clang_complete_copen = 1
-let g:clang_complete_macros = 1
-let g:clang_complete_patterns = 1
-" Clang snippets
-let g:clang_snippets = 1
-" Better conceal level for clang
-set conceallevel=2
-set concealcursor=vin
-let g:clang_conceal_snippets = 1
 
 "--------- HELPERS ---------
 " Delete trailing white-space on save
