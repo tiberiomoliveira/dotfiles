@@ -36,9 +36,6 @@ export GIT_EDITOR="$VISUAL"
 # Set vi mode on bash
 set -o vi
 
-# Correct tmux color problem
-alias tmux='tmux -2'
-
 # CLI color definition
 BLUE="\e[34;1m"
 CYAN="\e[36;1m"
